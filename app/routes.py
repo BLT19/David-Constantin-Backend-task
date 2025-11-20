@@ -21,8 +21,8 @@ def city(item):
         pattern = re.compile(r"[A-Z][a-z]+")
         return pattern.match(input_item)
     
-    if use_regex(item):
-        if item:
+    if item:
+        if use_regex(item):
             sightings = table[table['location'] == item]
 
             arr = sightings.to_dict()
@@ -32,10 +32,10 @@ def city(item):
             return json.dumps(result)
     
         else:
-            return 0
+            return bad_request('Invalid input (The first letter of the city must be capitalised)')
         
     else:
-        return bad_request('Incorrect input')
+        return json.dumps(table.to_dict(orient='records'))
 
 #@app.route('/date/<after> <before')
 #def date(after, before):
