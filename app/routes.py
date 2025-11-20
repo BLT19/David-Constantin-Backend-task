@@ -3,9 +3,12 @@ import pandas as pd
 import json
 from datetime import datetime
 import re
-import werkzeug.exceptions
 
 table = pd.read_excel('Tick Sightings.xlsx', dtype={'id':str, 'date':str, 'location':str, 'species':str, 'latinName':str})
+
+@app.errorhandler(404)
+def bad_request(error):
+    return error, 404
 
 @app.route('/')
 def index():
@@ -32,7 +35,7 @@ def city(item):
             return 0
         
     else:
-        return bad_request
+        return bad_request('Incorrect input')
 
 #@app.route('/date/<after> <before')
 #def date(after, before):
