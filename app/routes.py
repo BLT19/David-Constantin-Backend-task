@@ -12,7 +12,7 @@ def bad_request(error):
 
 @app.route('/')
 def index():
-    return json.dumps(table.to_dict(orient='records'))
+    return table.to_json(orient='records')
 
 @app.route('/city', defaults={'item': None})
 @app.route('/city/<item>')
@@ -25,19 +25,38 @@ def city(item):
         if use_regex(item):
             sightings = table[table['location'] == item]
 
-            arr = sightings.to_dict()
             total_entries = sightings.shape[0]
-            result = {'total_entries': total_entries, 'data': arr}
+            result = {'total_entries': total_entries, 'data': sightings.to_json(orient='records')}
     
             return json.dumps(result)
-    
         else:
             return bad_request('Invalid input (The first letter of the city must be capitalised)')
-        
     else:
-        return json.dumps(table.to_dict(orient='records'))
+        return table.to_json(orient='records')
 
-#@app.route('/date/<after> <before')
-#def date(after, before):
-#    if before is None and after is None:
-#        sightings = table[table['']]
+@app.route('/date', defaults={'after': None, 'before': None})
+@app.route('/date/after=<after>', defaults={'before': None})
+@app.route('/date/before=<before>', defaults={'after': None})
+@app.route('/date/after=<after>before=<before>')
+def date(after, before):
+    table['date'] = pd.to_datetime(table['date'])
+    if after and before:
+        after = pd.to_datetime(after)
+        before = pd.to_datetime(before)
+
+        temp = table[table['date'] > after]
+        sightings = temp[temp['date'] < before]
+        return sightings.to_json(orient='records', date_format='iso')
+    elif after:
+        after = pd.to_datetime(after)
+
+        sightings = table[table['date'] > after]
+        return sightings.to_json(orient='records', date_format='iso')
+    elif before:
+        before = pd.to_datetime(before)
+
+        sightings = table[table['date'] < before]
+        return sightings.to_json(orient='records', date_format='iso')
+    else:
+        table['date'] = table['date'].dt.strftime('%Y-%m-%dT%H:%M:%S')
+        return table.to_json(orient='records')
