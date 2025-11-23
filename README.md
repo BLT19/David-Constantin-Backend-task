@@ -14,19 +14,17 @@ This app allows for the quick processing of tick sighting data dating back over 
 
 ## How to run the project
 
-1. Clone the repo
+1. Download and extract the zip file
 
-2. Pull the files
+2. Create a venv in the same directory you cloned the repo
 
-3. Create a venv in the same directory you cloned the repo
+3. Activate the venv with the command "source venv/bin/activate" on linux or just "venv/scripts/activate" on windows
 
-4. Activate the venv with the command "source venv/bin/activate
+4. Run "pip install -r requirements.txt" to install all the dependencies
 
-5. Run "pip install -r requirements.txt" to install all the dependencies
+5. Now you can use the command "flask run" in order to run the project
 
-6. Now you can use the command "flask run" in order to run the project
-
-7. Open the localhost link to start using the app. Routes are as follows:
+6. Open the localhost link to start using the app. Routes are as follows:
     - "/" will display the whole dataset
 
     - "/city/**CITYNAME**" will filter the data by the provided city. If no city is provided the whole dataset will be presented.
@@ -37,7 +35,7 @@ This app allows for the quick processing of tick sighting data dating back over 
 
     - "/trend/weekly/year=**YEAR**month=**MONTH**city=**CITY**" will display a graph of the weekly data trends within a given month of a given year. The "city" is once again optional and does not need to be provided. If it is not provided, the weekly trend for the month in the given year for the entirety of the UK will be displayed.
 
-8. Once finished with the app, press Shift+C in the command line to close the app.
+7. Once finished with the app, press Shift+C in the command line to close the app.
 
 ## Documentation and Thought Process
 
