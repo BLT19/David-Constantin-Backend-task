@@ -37,10 +37,10 @@ def city(city):
         if use_regex(city):
             sightings = df[df['location'] == city]
 
-            total_entries = sightings.shape[0]
-            result = {'total_entries': total_entries, 'data': sightings.to_json(orient='records', date_format='iso')}
+            total_entries = len(sightings)
+            result = {'total_entries': total_entries, 'data': sightings.to_dict(orient='records')}
     
-            return json.dumps(result)
+            return json.dumps(result, default=str)
         else:
             return bad_request('Invalid input (The first letter of the city must be capitalised)')
     else:
