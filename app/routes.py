@@ -43,7 +43,7 @@ def city(item):
 @app.route('/date/after=<after>before=<before>')
 def date(after, before):
     def use_regex(input_item):
-        pattern = re.compile(r"[0-9]+-(0[1-9]|1[0,1,2])-(0[1-9]|[12][0-9]|3[01])T(0?[0-9]|1[0-9]|2[0-3]):(0?[0-9]|[1-5][0-9]):(0?[0-9]|[1-5][0-9])")
+        pattern = re.compile(r"^([0-9]+-(0[1-9]|1[0,1,2])-(0[1-9]|[12][0-9]|3[01])T(0?[0-9]|1[0-9]|2[0-3]):(0?[0-9]|[1-5][0-9]):(0?[0-9]|[1-5][0-9]){19})$")
         return pattern.match(input_item)
 
     if after and before:
@@ -80,4 +80,6 @@ def date(after, before):
     
 @app.route('/trend/weekly/year=<year>month=<month>')
 def weekly(year, month):
-    return 0
+    def use_regex(input_item):
+        pattern = re.compile(r"^[0-9]{4}$")
+        return pattern.match(input_item)
