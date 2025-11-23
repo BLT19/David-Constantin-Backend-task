@@ -65,7 +65,7 @@ def date(after, before):
             return sightings.to_json(orient='records', date_format='iso')
         
         else:
-            return bad_request('Invalid input (Dates must be in the format YYYY-mm-ddThh:mm:ss)')
+            return bad_request('Invalid input (Dates must be in the format YYYY-MM-ddThh:mm:ss)')
     elif after:
         if use_regex(after):
             after = pd.to_datetime(after)
@@ -74,7 +74,7 @@ def date(after, before):
             return sightings.to_json(orient='records', date_format='iso')
         
         else:
-            return bad_request('Invalid input (Dates must be in the format YYYY-mm-ddThh:mm:ss)')
+            return bad_request('Invalid input (Dates must be in the format YYYY-MM-ddThh:mm:ss)')
     elif before:
         if use_regex(before):
             before = pd.to_datetime(before)
@@ -83,7 +83,7 @@ def date(after, before):
             return sightings.to_json(orient='records', date_format='iso')
         
         else:
-            return bad_request('Invalid input (Dates must be in the format YYYY-mm-ddThh:mm:ss)')
+            return bad_request('Invalid input (Dates must be in the format YYYY-MM-ddThh:mm:ss)')
     else:
         return df.to_json(orient='records', date_format='iso')
 
