@@ -24,7 +24,9 @@ def bad_request(error):
 
 @app.route('/')
 def index():
-    return df.to_json(orient='records', date_format='iso')
+    sightings = df.copy()
+    sightings['date'] = sightings['date'].dt.strftime('%Y-%m-%dT%H:%M:%S')
+    return sightings.to_json(orient='records')
 
 @app.route('/city', defaults={'item': None})
 @app.route('/city/<city>')
@@ -35,57 +37,66 @@ def city(city):
     
     if city:
         if use_regex(city):
-            sightings = df[df['location'] == city]
+            city_sightings = df[df['location'] == city].copy()
+            city_sightings['date'] = city_sightings['date'].dt.strftime('%Y-%m-%dT%H:%M:%S')
 
-            total_entries = len(sightings)
-            result = {'total_entries': total_entries, 'data': sightings.to_dict(orient='records')}
+            total_entries = len(city_sightings)
+            result = {'total_entries': total_entries, 'data': city_sightings.to_dict(orient='records')}
     
             return json.dumps(result, default=str)
         else:
             return bad_request('Invalid input (The first letter of the city must be capitalised)')
     else:
-        return df.to_json(orient='records',date_format='iso')
+        return df.to_json(orient='records')
 
 @app.route('/date', defaults={'after': None, 'before': None})
 @app.route('/date/after=<after>', defaults={'before': None})
 @app.route('/date/before=<before>', defaults={'after': None})
 @app.route('/date/after=<after>before=<before>')
 def date(after, before):
-    def use_regex(input_item):
-        pattern = re.compile(r"^([0-9]+-(0[1-9]|1[0,1,2])-(0[1-9]|[12][0-9]|3[01])T(0?[0-9]|1[0-9]|2[0-3]):(0?[0-9]|[1-5][0-9]):(0?[0-9]|[1-5][0-9]){19})$")
-        return pattern.match(input_item)
+    def is_iso_datetime(date_string):
+        try:
+            datetime.fromisoformat(date_string)
+            return True
+        except ValueError:
+            return False
 
     if after and before:
-        if use_regex(after) and use_regex(before):
+        if is_iso_datetime(after) and is_iso_datetime(before):
             after = pd.to_datetime(after)
             before = pd.to_datetime(before)
 
-            temp = df[df['date'] > after]
-            sightings = temp[temp['date'] < before]
-            return sightings.to_json(orient='records', date_format='iso')
+            temp = df[df['date'] > after].copy()
+            date_both_sightings = temp[temp['date'] < before]
+            date_both_sightings['date'] = date_both_sightings['date'].dt.strftime('%Y-%m-%dT%H:%M:%S')
+            return date_both_sightings.to_json(orient='records')
         
         else:
             return bad_request('Invalid input (Dates must be in the format YYYY-MM-ddThh:mm:ss)')
     elif after:
-        if use_regex(after):
+        if is_iso_datetime(after):
             after = pd.to_datetime(after)
 
-            sightings = df[df['date'] > after]
-            return sightings.to_json(orient='records', date_format='iso')
+            date_after_sightings = df[df['date'] > after].copy()
+            date_after_sightings['date'] = date_after_sightings['date'].dt.strftime('%Y-%m-%dT%H:%M:%S')
+            return date_after_sightings.to_json(orient='records')
         
         else:
             return bad_request('Invalid input (Dates must be in the format YYYY-MM-ddThh:mm:ss)')
     elif before:
-        if use_regex(before):
+        if is_iso_datetime(before):
             before = pd.to_datetime(before)
 
-            sightings = df[df['date'] < before]
-            return sightings.to_json(orient='records', date_format='iso')
+            date_before_sightings = df[df['date'] < before].copy()
+            date_before_sightings['date'] = date_before_sightings['date'].dt.strftime('%Y-%m-%dT%H:%M:%S')
+            return date_before_sightings.to_json(orient='records')
         
         else:
             return bad_request('Invalid input (Dates must be in the format YYYY-MM-ddThh:mm:ss)')
     else:
-        return df.to_json(orient='records', date_format='iso')
+        date_sightings = df.copy()
+        date_sightings['date'] = date_sightings['date'].dt.strftime('%Y-%m-%dT%H:%M:%S')
+        return date_sightings.to_json(orient='records')
 
 @app.route('/trend/monthly', defaults={'year':None, 'city':None}) 
 @app.route('/trend/monthly/year=<year>', defaults={'city':None})
@@ -102,7 +113,7 @@ def monthly(year, city):
     if year and city:
         if year_regex(year) and city_regex(city):
             year = int(year)
-            temp = df[df['date'].dt.year == year]
+            temp = df[df['date'].dt.year == year].copy()
             sightings = temp[temp['location']== city]
             monthly_counts = sightings.groupby(sightings['date'].dt.month).size()
             monthly_counts = monthly_counts.reindex(range(1, 13), fill_value=0)
@@ -128,7 +139,7 @@ def monthly(year, city):
     elif year:
         if year_regex(year):
             year = int(year)
-            sightings = df[df['date'].dt.year == year]
+            sightings = df[df['date'].dt.year == year].copy()
             monthly_counts = sightings.groupby(sightings['date'].dt.month).size()
             monthly_counts = monthly_counts.reindex(range(1, 13), fill_value=0)
             monthly_counts.index = [calendar.month_abbr[x] for x in monthly_counts.index]
@@ -172,7 +183,7 @@ def weekly(year, month, city):
         if year_regex(year) and month_regex(month) and city_regex(city):
             year = int(year)
             month = int(month)
-            temp1 = df[df['date'].dt.year == year]
+            temp1 = df[df['date'].dt.year == year].copy()
             temp2 = temp1[temp1['date'].dt.month == month]
             sightings = temp2[temp2['location']== city]
 
@@ -204,7 +215,7 @@ def weekly(year, month, city):
         if year_regex(year) and month_regex(month):
             year = int(year)
             month = int(month)
-            temp = df[df['date'].dt.year == year]
+            temp = df[df['date'].dt.year == year].copy()
             sightings = temp[temp['date'].dt.month == month]
 
             start_date = pd.Timestamp(year, month, 1)
