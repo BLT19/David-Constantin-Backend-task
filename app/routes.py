@@ -28,7 +28,7 @@ def index():
     sightings['date'] = sightings['date'].dt.strftime('%Y-%m-%dT%H:%M:%S')
     return sightings.to_json(orient='records')
 
-@app.route('/city', defaults={'item': None})
+@app.route('/city', defaults={'city': None})
 @app.route('/city/<city>')
 def city(city):
     def use_regex(input_item):
@@ -47,7 +47,9 @@ def city(city):
         else:
             return bad_request('Invalid input (The first letter of the city must be capitalised)')
     else:
-        return df.to_json(orient='records')
+        no_city_sightings = df.copy()
+        no_city_sightings['date'] = no_city_sightings['date'].dt.strftime('%Y-%m-%dT%H:%M:%S')
+        return no_city_sightings.to_json(orient='records')
 
 @app.route('/date', defaults={'after': None, 'before': None})
 @app.route('/date/after=<after>', defaults={'before': None})
