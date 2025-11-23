@@ -28,7 +28,7 @@ def index():
     sightings['date'] = sightings['date'].dt.strftime('%Y-%m-%dT%H:%M:%S')
     return sightings.to_json(orient='records')
 
-@app.route('/city', defaults={'city': None})
+@app.route('/city/', defaults={'city': None})
 @app.route('/city/<city>')
 def city(city):
     def use_regex(input_item):
@@ -51,7 +51,7 @@ def city(city):
         no_city_sightings['date'] = no_city_sightings['date'].dt.strftime('%Y-%m-%dT%H:%M:%S')
         return no_city_sightings.to_json(orient='records')
 
-@app.route('/date', defaults={'after': None, 'before': None})
+@app.route('/date/', defaults={'after': None, 'before': None})
 @app.route('/date/after=<after>', defaults={'before': None})
 @app.route('/date/before=<before>', defaults={'after': None})
 @app.route('/date/after=<after>before=<before>')
