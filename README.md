@@ -35,7 +35,7 @@ This app allows for the quick processing of tick sighting data dating back over 
 
     - "/trend/monthly/year=**YEAR**city=**CITY**" will display a graph of the monthly data trends within a given year and in a specified city. The "city" is optional and does not need to be provided. If "city" is not provided, the app will display the monthly trend for the entirety of the UK.
 
-    -"/trend/weekly/year=**YEAR**month=**MONTH**city=**CITY**" will display a graph of the weekly data trends within a given month of a given year. The "city" is once again optional and does not need to be provided. If it is not provided, the weekly trend for the month in the given year for the entirety of the UK will be displayed.
+    - "/trend/weekly/year=**YEAR**month=**MONTH**city=**CITY**" will display a graph of the weekly data trends within a given month of a given year. The "city" is once again optional and does not need to be provided. If it is not provided, the weekly trend for the month in the given year for the entirety of the UK will be displayed.
 
 8. Once finished with the app, press Shift+C in the command line to close the app.
 
