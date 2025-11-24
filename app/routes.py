@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import calendar
 from matplotlib.figure import Figure
+import matplotlib
+matplotlib.use('Agg')
 import base64
 from io import BytesIO
 
