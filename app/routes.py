@@ -132,10 +132,10 @@ def monthly(year, city):
             buf = BytesIO()
             fig.savefig(buf, format='png')
     
-            plot_url = base64.b64encode(buf.getbuffer()).decode()
+            data = base64.b64encode(buf.getbuffer()).decode()
     
             plt.close(fig) 
-            return f'<img src="data:image/png;base64,{plot_url}"/>'
+            return f'<img src="data:image/png;base64,{data}"/>'
         
         else:
             return bad_request('Please input a valid year and, if you would like to filter results further, a valid city (City names must be capitalised)')
@@ -157,10 +157,10 @@ def monthly(year, city):
             buf = BytesIO()
             fig.savefig(buf, format='png')
     
-            plot_url = base64.b64encode(buf.getbuffer()).decode()
+            data = base64.b64encode(buf.getbuffer()).decode()
     
             plt.close(fig) 
-            return f'<img src="data:image/png;base64,{plot_url}"/>'
+            return f'<img src="data:image/png;base64,{data}"/>'
         else:
             return bad_request('Please input a valid year and (optional) a valid city (City names must be capitalised)')
         
@@ -209,8 +209,8 @@ def weekly(year, month, city):
             fig.savefig(img, format='png')
             plt.close(fig)
 
-            plot_url = base64.b64encode(img.getvalue()).decode()
-            return f'<img src="data:image/png;base64,{plot_url}"/>'
+            data = base64.b64encode(img.getvalue()).decode()
+            return f'<img src="data:image/png;base64,{data}"/>'
         
         else:
             return bad_request('Please input a valid year, month, and (optional) a city (City names must be capitalised)')
@@ -240,8 +240,8 @@ def weekly(year, month, city):
             fig.savefig(img, format='png')
             plt.close(fig)
 
-            plot_url = base64.b64encode(img.getvalue()).decode()
-            return f'<img src="data:image/png;base64,{plot_url}"/>'
+            data = base64.b64encode(img.getvalue()).decode()
+            return f'<img src="data:image/png;base64,{data}"/>'
         
         else:
             return bad_request('Please input a valid year, month, and (optional) a city (City names must be capitalised)')
