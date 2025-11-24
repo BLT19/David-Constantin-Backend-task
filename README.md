@@ -10,15 +10,15 @@ This is the backend of a web app that processes provided data about tick sightin
 
 ### Why the project is useful
 
-This app allows for the quick processing of tick sighting data dating back over a decade ago. This means that the app can both help keep track of old records and very clearly view the change in the amount of tick sightings over the year. This makes studying the data significantly easier as it takes far less time to go through it all to find the specific parts you might ahve been looking for.
+This app allows for the quick processing of tick sighting data dating back over a decade ago. This means that the app can both help keep track of old records and very clearly view the change in the amount of tick sightings over the year. This makes studying the data significantly easier as it takes far less time to go through it all to find the specific parts you might have been looking for.
 
 ## How to run the project
 
 1. Download and extract the zip file
 
-2. Create a venv in the same directory you cloned the repo
+2. Create a venv in the same directory
 
-3. Activate the venv with the command "source venv/bin/activate" on linux or just "venv/scripts/activate" on windows
+3. Activate the venv with the command '''bash source venv/bin/activate ''' on linux or just "venv/scripts/activate" on windows
 
 4. Run "pip install -r requirements.txt" to install all the dependencies
 
@@ -33,15 +33,15 @@ This app allows for the quick processing of tick sighting data dating back over 
 
     - "/trend/monthly/year=**YEAR**city=**CITY**" will display a graph of the monthly data trends within a given year and in a specified city. The "city" is optional and does not need to be provided. If "city" is not provided, the app will display the monthly trend for the entirety of the UK.
 
-    - "/trend/weekly/year=**YEAR**month=**MONTH**city=**CITY**" will display a graph of the weekly data trends within a given month of a given year. The "city" is once again optional and does not need to be provided. If it is not provided, the weekly trend for the month in the given year for the entirety of the UK will be displayed.
+    - "/trend/weekly/year=**YEAR**month=**MONTH**city=**CITY**" will display a graph of the weekly data trends within the given month of a given year. The "city" is once again optional and does not need to be provided. If it is not provided, the weekly trend for the month in the given year for the entirety of the UK will be displayed.
 
-7. Once finished with the app, press Shift+C in the command line to close the app.
+7. Once finished with the app, press Shift+C in the command line to close it.
 
 ## Documentation and Thought Process
 
 ### Frameworks and architecture
 
-The framework that I decided to use for this project was **Flask**. This is because Flask is a lightweight and easy to use framework. The project was not particularly large or complicated, and so I thought that Flask was fitting as it would hepl me complete the project within the specified deadline as Flask is very easy to learn and easy to use with plenty of documentation on it to help learn it. Flask would also make scaling the project up easy if it was required.
+The framework that I decided to use for this project was **Flask**. This is because Flask is a lightweight and easy to use framework. The project was not particularly large or complicated, and so I thought that Flask was fitting as it would help me complete the project within the specified deadline as Flask is very easy to learn and easy to use with plenty of documentation on it to help learn it. Flask would also make scaling the project up easy if it was required.
 
 ### How the app consumes and presents data
 
