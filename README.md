@@ -18,7 +18,7 @@ This app allows for the quick processing of tick sighting data dating back over 
 
 2. Create a venv in the same directory
 
-3. Activate the venv with the command '''bash source venv/bin/activate ''' on linux or just "venv/scripts/activate" on windows
+3. Activate the venv with the command ```bash source venv/bin/activate ``` on linux or just ```bash venv/scripts/activate ``` on windows
 
 4. Run "pip install -r requirements.txt" to install all the dependencies
 
