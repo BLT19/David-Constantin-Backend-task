@@ -25,9 +25,9 @@ This app allows for the quick processing of tick sighting data dating back over 
 5. Now you can use the command ```flask run``` in order to run the project
 
 6. Open the localhost link to start using the app. Routes are as follows:
-    - "/" will display the whole dataset
+    - ```/``` will display the whole dataset
 
-    - "/city/**CITYNAME**" will filter the data by the provided city. If no city is provided the whole dataset will be presented.
+    - ```/city/**CITYNAME**``` will filter the data by the provided city. If no city is provided the whole dataset will be presented.
 
     - "/date/after=**AFTER**before=**BEFORE**" will filter the data by the provided dates. If only the "after" is provided then the app will display all data with dates after the provided one. Same with "before" but data with dates before the provided one will be shown. If both "after" and "before" are provided, the app will display all data within the provided time range. (Date format is YYYY-MM-ddThh:mm:ss)
 
